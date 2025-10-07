@@ -1,0 +1,5 @@
+spotipy
+tidalapi
+click
+python-dotenv
+sqlalchemy
