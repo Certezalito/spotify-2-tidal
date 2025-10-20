@@ -1,7 +1,8 @@
 <!--
 Sync Impact Report:
-- Version change: 0.0.0 → 1.0.0
-- Added sections: Mission, Core Principles, Key Success Metrics, Governance
+- Version change: 1.0.0 → 1.1.0
+- Modified principles: Accuracy
+- Added sections: None
 - Removed sections: None
 - Templates requiring updates: None
 - Follow-up TODOs: None
@@ -19,7 +20,7 @@ The primary objective of the "spotify-2-tidal" project is to provide a reliable 
 The tool will be designed for ease of use, with clear commands and feedback. User data privacy and security are paramount.
 
 ### Accuracy
-The synchronization process will prioritize accurate matching of tracks between Spotify and Tidal, utilizing ISRC codes as the primary method and falling back to metadata searches when necessary.
+The synchronization process will prioritize accurate matching of tracks between Spotify and Tidal, utilizing ISRC codes as the sole method for matching. Tracks that are found but unavailable on Tidal will still be added to the user's library.
 
 ### Robustness
 The application will handle potential errors gracefully, providing clear logging for both successful syncs and any issues encountered. It will be designed to manage large music libraries without failure.
@@ -41,4 +42,4 @@ The codebase and documentation will be well-structured and easy to understand, f
 
 This constitution is the guiding document for the project. Any amendments must be proposed and agreed upon by the project maintainers.
 
-**Version**: 1.0.0 | **Ratified**: 2025-10-07 | **Last Amended**: 2025-10-07
+**Version**: 1.1.0 | **Ratified**: 2025-10-07 | **Last Amended**: 2025-10-20

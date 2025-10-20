@@ -1,6 +1,17 @@
 import click
-from src.lib.config import load_config
-from src.services.sync import sync_albums, sync_artists, sync_tracks, sync_playlists
+from ..lib.config import load_config
+from ..services.sync import sync_albums as _sync_albums, sync_artists as _sync_artists, sync_tracks as _sync_tracks, sync_playlists as _sync_playlists
+import logging
+
+class SpotifyRateLimitFilter(logging.Filter):
+    def filter(self, record):
+        if 'Your application has reached a rate/request limit' in record.getMessage():
+            record.msg = f"Spotify API rate limit reached. {record.msg}"
+        return True
+
+# Configure logging
+logging.basicConfig(level=logging.WARNING, format='%(levelname)s:%(name)s:%(message)s')
+logging.getLogger().addFilter(SpotifyRateLimitFilter())
 
 @click.group()
 def cli():
@@ -22,24 +33,24 @@ def sync(sync_albums, sync_artists, sync_tracks, sync_playlists):
     """
     if not any([sync_albums, sync_artists, sync_tracks, sync_playlists]):
         click.echo("Synchronizing all music data...")
-        sync_albums()
-        sync_artists()
-        sync_tracks()
-        sync_playlists()
+        _sync_albums()
+        _sync_artists()
+        _sync_tracks()
+        _sync_playlists()
         click.echo("Synchronization complete.")
     else:
         if sync_albums:
             click.echo("Synchronizing albums...")
-            sync_albums()
+            _sync_albums()
         if sync_artists:
             click.echo("Synchronizing artists...")
-            sync_artists()
+            _sync_artists()
         if sync_tracks:
             click.echo("Synchronizing tracks...")
-            sync_tracks()
+            _sync_tracks()
         if sync_playlists:
             click.echo("Synchronizing playlists...")
-            sync_playlists()
+            _sync_playlists()
         click.echo("Selective synchronization complete.")
 
 if __name__ == '__main__':

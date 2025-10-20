@@ -1,0 +1,5 @@
+/.venv
+.cache
+.env
+tidal_session.json
+synced.db
