@@ -41,23 +41,14 @@ def get_liked_songs():
     Returns a list of the user's liked songs.
     """
     sp = get_spotify_client()
+    
     results = sp.current_user_saved_tracks(limit=50)
-    tracks = []
-    while results:
-        for item in results['items']:
-            track = item['track']
-            # Manually add the fields that are available in the full track object
-            track_details = sp.track(track['id'])
-            track['duration_ms'] = track_details['duration_ms']
-            track['is_playable'] = track_details['is_playable']
-            track['external_ids'] = track_details['external_ids']
-            tracks.append(track)
-        if results['next']:
-            results = sp.next(results)
-            time.sleep(0.5)
-        else:
-            results = None
-    return tracks
+    tracks = results['items']
+    while results['next']:
+        results = sp.next(results)
+        tracks.extend(results['items'])
+    
+    return [item['track'] for item in tracks]
 
 def get_playlists():
     """

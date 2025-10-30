@@ -12,13 +12,13 @@ This document outlines the implementation plan for a command-line tool that sync
 ## Technical Context
 
 **Language/Version**: Python 3.11+  
-**Primary Dependencies**: spotipy, tidalapi, click, python-dotenv, sqlalchemy  
-**Storage**: SQLite for logging synced and errored items  
+**Primary Dependencies**: spotipy, tidalapi, click, python-dotenv  
+**Storage**: Log file for storing timestamped sync status (e.g., `sync.log`)  
 **Testing**: Manual testing  
 **Target Platform**: Cross-platform (Windows, macOS, Linux)  
 **Project Type**: Single project (CLI tool)  
 **Performance Goals**: Synchronize a library of 10,000 items in under 30 minutes.  
-**Constraints**: Must handle API rate limiting from both Spotify and Tidal.  
+**Constraints**: Must handle API rate limiting from both Spotify and Tidal. Must use the OAuth 2.0 Authorization Code Flow for all user authentication. Must reuse a single authenticated Tidal session for all operations. All tracks, regardless of availability, must be attempted to be synced.  
 **Scale/Scope**: Designed for individual user libraries of up to 50,000 items.
 
 ## Constitution Check
@@ -26,7 +26,7 @@ This document outlines the implementation plan for a command-line tool that sync
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
 - **User-centricity**: The CLI design with clear feedback and help messages aligns with this principle.
-- **Accuracy**: The use of ISRC for track matching with a metadata fallback ensures high accuracy.
+- **Accuracy**: The use of ISRC for track matching ensures high accuracy.
 - **Robustness**: Graceful error handling and detailed logging are core to the plan.
 - **Performance**: The performance goal of syncing 10,000 items in under 30 minutes meets this requirement.
 - **Clarity**: The project structure and documentation plan support code clarity and maintainability.

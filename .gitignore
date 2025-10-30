@@ -3,3 +3,4 @@
 .env
 tidal_session.json
 synced.db
+sync.log

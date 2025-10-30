@@ -1,78 +1,61 @@
-# Tasks: Spotify to Tidal Music Library Synchronization
+# Task Breakdown: Spotify to Tidal Music Library Synchronization
 
-**Input**: Design documents from `/specs/001-spotify-2-tidal/`
-**Prerequisites**: plan.md, spec.md, data-model.md, contracts/
+**Feature**: [Spotify to Tidal Music Library Synchronization](spec.md)
+**Implementation Plan**: [Implementation Plan](plan.md)
 
-## Phase 1: Setup (Shared Infrastructure)
+## Phase 1: Setup
 
-- [x] T001 [P] Create the project structure in the `src/` directory, including `models/`, `services/`, `cli/`, and `lib/`.
-- [x] T002 [P] Initialize the project with a `requirements.txt` file and add the primary dependencies: `spotipy`, `tidalapi`, `click`, `python-dotenv`, `sqlalchemy`.
-- [x] T003 [P] Configure linting and formatting tools for the project.
+- **T001**: [X] [Setup] Initialize a new Python project with a virtual environment.
+- **T002**: [X] [Setup] Install the required dependencies: `spotipy`, `tidalapi`, `click`, `python-dotenv`.
+- **T003**: [X] [Setup] Create the basic project structure with `src`, `tests`, and `docs` directories.
 
-## Phase 2: Foundational (Blocking Prerequisites)
+## Phase 2: Foundational
 
-- [x] T004 [P] Implement the OAuth 2.0 Authorization Code Flow for Spotify in `src/services/spotify_auth.py`.
-- [x] T005 [P] Implement the OAuth 2.0 Authorization Code Flow for Tidal in `src/services/tidal_auth.py`.
-- [x] T006 [P] Create the database schema for logging in `src/models/log.py` using SQLAlchemy.
-- [x] T007 [P] Implement the environment variable loading from the `.env` file in `src/lib/config.py`.
-- [x] T008 [P] Set up the basic CLI structure in `src/cli/main.py` using `click`.
+- **T004**: [X] [Foundation] Implement a configuration module (`src/lib/config.py`) to load API credentials and other settings from a `.env` file.
+- **T005**: [X] [Foundation] Implement a logging module (`src/lib/logger.py`) to handle both console and file logging, with timestamped entries in the file.
+- **T006**: [X] [Foundation] Implement the Spotify authentication service (`src/services/spotify_auth.py`) using the OAuth 2.0 Authorization Code Flow.
+- **T007**: [X] [Foundation] Implement the Tidal authentication service (`src/services/tidal_auth.py`) using the OAuth 2.0 Authorization Code Flow, ensuring that sessions are reused.
 
-## Phase 3: User Story 1 - Full Library Synchronization (Priority: P1) 🎯 MVP
+## Phase 3: User Story 1 - Full Library Synchronization
 
-**Goal**: Synchronize the user's entire Spotify music library to their Tidal account with a single command.
+**Goal**: As a user, I want to run a single command to synchronize my entire Spotify music library to my Tidal account.
+**Independent Test**: Run the main command without arguments and verify that all items from a test Spotify account are present in a test Tidal account.
 
-**Independent Test**: Run `spotify-2-tidal` and verify that all items from a test Spotify account are present in a test Tidal account.
+- **T008**: [X] [US1] Implement the Spotify client (`src/services/spotify_client.py`) to fetch saved albums, artists, tracks, and playlists.
+- **T009**: [X] [US1] Implement the Tidal client (`src/services/tidal_client.py`) to add albums, artists, tracks, and playlists.
+- **T010**: [X] [US1] Implement the core synchronization logic (`src/services/sync.py`) to orchestrate the fetching and adding of all music data, ensuring that all tracks are attempted to be synced regardless of availability.
+- **T011**: [X] [US1] Implement the main CLI command (`src/cli/main.py`) to trigger the full synchronization process and reuse the Tidal session.
 
-### Implementation for User Story 1
+## Phase 4: User Story 2 - Selective Data Synchronization
 
-- [x] T009 [P] [US1] Implement functions to fetch saved albums from Spotify in `src/services/spotify_client.py`.
-- [x] T010 [P] [US1] Implement functions to fetch followed artists from Spotify in `src/services/spotify_client.py`.
-- [x] T011 [P] [US1] Implement functions to fetch liked songs from Spotify in `src/services/spotify_client.py`.
-- [x] T012 [P] [US1] Implement functions to fetch playlists from Spotify in `src/services/spotify_client.py`.
-- [x] T013 [US1] Implement the core track matching logic in `src/services/tidal_client.py`.
-- [x] T014 [US1] Implement the synchronization of albums, artists, tracks, and playlists in `src/services/sync.py`.
-- [x] T015 [US1] Integrate the full synchronization logic with the main `spotify-2-tidal` command in `src/cli/main.py`.
-- [x] T016 [US1] Implement the logging of successful and failed syncs to the database in `src/lib/logger.py`.
-- [x] T017 [US1] Implement real-time user feedback during the synchronization process in `src/cli/main.py`.
+**Goal**: As a user, I want to be able to synchronize specific types of my music data.
+**Independent Test**: Run the main command with specific flags (e.g., `--sync-playlists`) and verify that only the specified data type is synced.
 
-## Phase 4: User Story 2 - Selective Data Synchronization (Priority: P2)
+- **T012**: [US2] [P] Modify the CLI (`src/cli/main.py`) to accept flags for selective synchronization (e.g., `--sync-albums`, `--sync-artists`, `--sync-tracks`, `--sync-playlists`).
+- **T013**: [US2] [P] Update the synchronization service (`src/services/sync.py`) to handle the selective sync flags and only process the requested data.
 
-**Goal**: Allow users to synchronize specific types of their music data.
+## Phase 5: User Story 3 - View Help and Command Information
 
-**Independent Test**: Run the tool with specific flags (e.g., `spotify-2-tidal --sync-playlists`) and verify that only the specified data type is synced.
+**Goal**: As a user, I want to be able to view a help menu that lists all available commands and their functions.
+**Independent Test**: Run the main command with the `--help` flag and verify that the output correctly describes the available commands.
 
-### Implementation for User Story 2
+- **T014**: [US3] Implement the `--help` flag in the CLI (`src/cli/main.py`) to display a comprehensive help message with all available commands and options.
 
-- [x] T018 [P] [US2] Implement the `--sync-albums` flag in `src/cli/main.py` to trigger the album synchronization logic.
-- [x] T019 [P] [US2] Implement the `--sync-artists` flag in `src/cli/main.py` to trigger the artist synchronization logic.
-- [x] T020 [P] [US2] Implement the `--sync-tracks` flag in `src/cli/main.py` to trigger the track synchronization logic.
-- [x] T021 [P] [US2] Implement the `--sync-playlists` flag in `src/cli/main.py` to trigger the playlist synchronization logic.
+## Phase 6: Polish & Integration
 
-## Phase 5: User Story 3 - View Help and Command Information (Priority: P3)
-
-**Goal**: Provide a help menu that lists all available commands and their functions.
-
-**Independent Test**: Run `spotify-2-tidal --help` and verify that the output correctly describes the available commands.
-
-### Implementation for User Story 3
-
-- [x] T022 [US3] Refine the help messages for all commands and options in `src/cli/main.py` using `click`'s documentation features.
-
-## Phase 6: Polish & Cross-Cutting Concerns
-
-- [x] T023 [P] Write comprehensive user documentation in a `README.md` file.
-- [x] T024 [P] Manually test the application with various Spotify library sizes and configurations.
-- [x] T025 [P] Refine error handling and logging based on testing feedback.
-- [x] T026 [P] Package the application for distribution.
+- **T015**: [Polish] Review and refine the console output to ensure it is clear and provides useful real-time feedback.
+- **T016**: [Polish] Review and refine the log file format to ensure it is easy to parse and contains all necessary information.
+- **T017**: [Polish] Write a `README.md` file with clear instructions on how to install, configure, and use the tool.
 
 ## Dependencies
 
-- **User Story 1** is the foundational MVP and should be completed first.
-- **User Story 2** depends on the completion of User Story 1.
-- **User Story 3** can be implemented at any time but is most useful after the core functionality is in place.
+- User Story 1 (Full Sync) is the foundation for User Story 2 (Selective Sync).
+- User Story 3 (Help Menu) is independent and can be implemented at any time.
 
-## Parallel Execution
+## Parallel Execution Examples
 
-- Within each user story, tasks marked with `[P]` can be worked on in parallel.
-- The implementation of each data type synchronization in User Story 1 can be parallelized.
-- The implementation of each flag in User Story 2 can be parallelized.
+- **Within User Story 2**: The CLI and synchronization service updates (T012, T013) can be worked on in parallel.
+
+## Implementation Strategy
+
+The implementation will start with the foundational setup and authentication, followed by the core synchronization logic for the full library sync (User Story 1). This will serve as the MVP. Subsequent user stories will be implemented incrementally to add more features and flexibility.

@@ -20,7 +20,7 @@ The primary objective of the "spotify-2-tidal" project is to provide a reliable 
 The tool will be designed for ease of use, with clear commands and feedback. User data privacy and security are paramount.
 
 ### Accuracy
-The synchronization process will prioritize accurate matching of tracks between Spotify and Tidal, utilizing ISRC codes as the sole method for matching. Tracks that are found but unavailable on Tidal will still be added to the user's library.
+The synchronization process will prioritize accurate matching of tracks between Spotify and Tidal, utilizing ISRC codes as the sole method for matching. All tracks, regardless of their availability, will be attempted to be synced.
 
 ### Robustness
 The application will handle potential errors gracefully, providing clear logging for both successful syncs and any issues encountered. It will be designed to manage large music libraries without failure.

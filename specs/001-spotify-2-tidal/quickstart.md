@@ -24,7 +24,6 @@
    TIDAL_CLIENT_ID=your_tidal_client_id
    TIDAL_CLIENT_SECRET=your_tidal_client_secret
    SPOTIFY_REDIRECT_URI=http://localhost:8888/callback
-   TIDAL_REDIRECT_URI=http://localhost:8888/callback
    TIDAL_PLAYLIST_FOLDER=synced_from_spotify
    ```
 

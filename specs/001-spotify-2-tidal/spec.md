@@ -87,22 +87,26 @@ As a user, I want to be able to view a help menu that lists all available comman
 
 ### Functional Requirements
 
-- **FR-001**: The system MUST allow users to authenticate with their Spotify account using OAuth 2.0.
-- **FR-002**: The system MUST allow users to authenticate with their Tidal account using OAuth 2.0.
+- **FR-001**: The system MUST allow users to authenticate with their Spotify account using the OAuth 2.0 Authorization Code Flow.
+- **FR-002**: The system MUST allow users to authenticate with their Tidal account using the OAuth 2.0 Device Authorization Flow.
 - **FR-003**: The system MUST be able to extract a user's saved albums, artists, tracks, and playlists from their Spotify account.
 - **FR-004**: The system MUST be able to add albums, artists, tracks, and playlists to a user's Tidal account.
 - **FR-005**: The system MUST provide a command-line interface for initiating the synchronization process.
 - **FR-006**: The system MUST support both full and selective data synchronization.
-- **FR-007**: The system MUST match tracks between Spotify and Tidal using ISRC codes as the primary method and metadata as a fallback.
-- **FR-008**: The system MUST log all successful and failed synchronization attempts to separate log files.
-- **FR-009**: The system MUST display real-time feedback to the user during the synchronization process.
-- **FR-010**: The system MUST use a local database to store logs of synced and errored items.
-- **FR-011**: The system MUST allow users to configure the name of the playlist folder in their Tidal account.
-
-*Example of marking unclear requirements:*
-
-- **FR-012**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-013**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **FR-007**: The system MUST match tracks between Spotify and Tidal using ISRC codes as the sole method, using the `get_tracks_by_isrc` function in the `tidalapi` library.
+- **FR-008**: The system MUST log all successful and failed synchronization attempts to a log file, with each entry timestamped and including the ISRC code where applicable.
+- **FR-009**: The system MUST display real-time sync information for tracks (including ISRC), artists, and playlists to the user in the console.
+- **FR-010**: The system MUST allow users to configure the name of the playlist folder in their Tidal account.
+- **FR-011**: The system MUST allow users to configure the path to the log file.
+- **FR-012**: The system MUST log tracks without an ISRC as "unmatchable" and skip them.
+- **FR-013**: The system MUST reuse a single authenticated Tidal session for all operations within a single run.
+- **FR-014**: The project MUST include a `README.md` file with clear instructions for installation, configuration, and usage.
+- **FR-015**: The system MUST attempt to sync all tracks, including those marked as unavailable on Spotify or Tidal.
+- **FR-016**: The system MUST clearly indicate the source (Spotify or Tidal) of any API rate limit warnings in the logs.
+- **FR-017**: The system MUST wait for the device flow to complete before continuing.
+- **FR-018**: The system MUST use batching for Spotify API requests where possible to improve performance and avoid rate limiting.
+- **FR-019**: The system MUST log the total time spent on API communications at the end of the synchronization process, to both the console and the log file.
+- **FR-020**: The system MUST allow the API request timeout duration to be configured.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -111,7 +115,7 @@ As a user, I want to be able to view a help menu that lists all available comman
 - **Album**: A collection of tracks, with attributes such as title and artist.
 - **Artist**: A musical artist, with an associated list of tracks and albums.
 - **Playlist**: A user-curated list of tracks.
-- **Log**: A record of a synchronization attempt, including the item, status (success or failure), and a timestamp.
+- **Log**: A record of a synchronization attempt, including the item, status (success or failure), a timestamp, and the ISRC code.
 
 ## Success Criteria *(mandatory)*
 

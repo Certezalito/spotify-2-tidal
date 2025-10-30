@@ -1,17 +1,9 @@
 import click
 from ..lib.config import load_config
 from ..services.sync import sync_albums as _sync_albums, sync_artists as _sync_artists, sync_tracks as _sync_tracks, sync_playlists as _sync_playlists
-import logging
-
-class SpotifyRateLimitFilter(logging.Filter):
-    def filter(self, record):
-        if 'Your application has reached a rate/request limit' in record.getMessage():
-            record.msg = f"Spotify API rate limit reached. {record.msg}"
-        return True
-
-# Configure logging
-logging.basicConfig(level=logging.WARNING, format='%(levelname)s:%(name)s:%(message)s')
-logging.getLogger().addFilter(SpotifyRateLimitFilter())
+from ..lib.logger import logger
+from ..services.tidal_auth import get_tidal_client
+import time
 
 @click.group()
 def cli():
@@ -31,27 +23,37 @@ def sync(sync_albums, sync_artists, sync_tracks, sync_playlists):
 
     By default, this command will synchronize all music data. You can use the flags to synchronize specific types of data.
     """
+    start_time = time.time()
+    tidal_session = get_tidal_client()
+    if not tidal_session:
+        logger.error("Failed to authenticate with Tidal. Aborting.")
+        return
+
     if not any([sync_albums, sync_artists, sync_tracks, sync_playlists]):
-        click.echo("Synchronizing all music data...")
-        _sync_albums()
-        _sync_artists()
-        _sync_tracks()
-        _sync_playlists()
-        click.echo("Synchronization complete.")
+        logger.info("Synchronizing all music data...")
+        _sync_albums(tidal_session)
+        _sync_artists(tidal_session)
+        _sync_tracks(tidal_session)
+        _sync_playlists(tidal_session)
+        logger.info("Synchronization complete.")
     else:
         if sync_albums:
-            click.echo("Synchronizing albums...")
-            _sync_albums()
+            logger.info("Synchronizing albums...")
+            _sync_albums(tidal_session)
         if sync_artists:
-            click.echo("Synchronizing artists...")
-            _sync_artists()
+            logger.info("Synchronizing artists...")
+            _sync_artists(tidal_session)
         if sync_tracks:
-            click.echo("Synchronizing tracks...")
-            _sync_tracks()
+            logger.info("Synchronizing tracks...")
+            _sync_tracks(tidal_session)
         if sync_playlists:
-            click.echo("Synchronizing playlists...")
-            _sync_playlists()
-        click.echo("Selective synchronization complete.")
+            logger.info("Synchronizing playlists...")
+            _sync_playlists(tidal_session)
+        logger.info("Selective synchronization complete.")
+    
+    end_time = time.time()
+    duration = end_time - start_time
+    logger.info(f"Total API communication time: {duration:.2f} seconds.")
 
 if __name__ == '__main__':
     cli()
