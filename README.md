@@ -112,3 +112,11 @@ python3 -m src.cli.main sync --help
 
 The application logs all synchronization activity to the file specified by the `LOG_FILE` variable in your `.env` file (default is `sync.log`). You can review this file to see which items were synced successfully and which failed.
 
+## How This Project Was Built
+
+This project was built using [spec-kit](https://github.com/github/spec-kit). For more details on the development process, see [howthisprojectwasbuilt.md](howthisprojectwasbuilt.md).
+
+## Acknowledgements
+
+This project was inspired by the work of the [spotify2tidal/spotify_to_tidal](https://github.com/spotify2tidal/spotify_to_tidal) project.
+
