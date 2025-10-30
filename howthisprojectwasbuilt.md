@@ -219,7 +219,7 @@ This document outlines the complete three-part AI specification for the "spotify
 
 # Feeding into Spec Kit
 
-[Spec kit](https://github.com/github/spec-kit) was initialized in this project.  VSCode with Copilot with Gemini 2.5 Pro. 
+[Spec kit](https://github.com/github/spec-kit) was initialized in this project.  VSCode with Copilot with Gemini 2.5 Pro in agent mode did the needful. 
 
 The section `### Part 1: Constitution` was fed into `/speckit.constitution` 
 
