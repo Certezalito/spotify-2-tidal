@@ -45,6 +45,7 @@ Before you can use the tool, you need to configure your API credentials and sett
     # Tidal API Credentials
     TIDAL_CLIENT_ID=your_tidal_client_id
     TIDAL_CLIENT_SECRET=your_tidal_client_secret
+    TIDAL_REDIRECT_URI=http://127.0.0.1:8888/callback
 
     # Application Settings
     TIDAL_PLAYLIST_FOLDER=synced_from_spotify
@@ -76,8 +77,8 @@ Before you can use the tool, you need to configure your API credentials and sett
 -   **Tidal**:
     1.  Go to the [Tidal Developer Portal](https://developer.tidal.com/).
     2.  Create a new application.
-    3.  **IMPORTANT**: When creating your application, you must select an application type that supports the **Device Authorization Flow**. The error `Client is not a Limited Input Device client` indicates that your current API key is for a different flow (e.g., Web). You will likely need to create a new set of credentials specifically for this tool.
-    4.  Copy the `Client ID` and `Client Secret` into your `.env` file.
+    3.  Copy the `Client ID` and `Client Secret` into your `.env` file.
+    4.  In your Tidal application settings, add `http://127.0.0.1:8888/callback` as a "Redirect URI".
 
 ## Usage
 
