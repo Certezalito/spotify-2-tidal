@@ -1,6 +1,6 @@
-_This file shows how the project was built_
+_This file shows how the project was built, no code was written by the author_
 
-#  Build the prompt for Spec Kit
+# Build the prompt for Spec Kit
 
 _Unstructred prompt fed into Gemini 2.5 Pro within Google AI Studio:_
 
@@ -71,7 +71,8 @@ search.write (Required to update personalized search results, e.g. delete search
 
 # Spec Kit Prompt
 
-Output: 
+_Output from the above prompt:_ 
+```
 ## spotify-2-tidal: A Comprehensive AI-Powered Specification
 
 This document outlines the complete three-part AI specification for the "spotify-2-tidal" project, a command-line tool designed to synchronize a user's Spotify music library to their Tidal account. The specification is broken down into a Constitution, a detailed Specification, and an actionable Plan, ensuring a clear and robust roadmap for the project's development.
@@ -214,7 +215,7 @@ This document outlines the complete three-part AI specification for the "spotify
 *   **Task 5.3:** Refine the error handling and logging based on testing feedback.
 *   **Task 5.4:** Package the application for distribution, including a `requirements.txt` file listing all dependencies.
 *   **Task 5.5:** Conduct a final review of the codebase for clarity, performance, and adherence to the specification.
-
+```
 
 # Feeding into Spec Kit
 
@@ -233,4 +234,4 @@ The section `### Part 3: Plan` was fed into `/speckit.plan`
 
 # Followup and Debugging
 
-A few followup questions were asked within VSCode to Copilot with Gemini 2.5 Pro to resolve various post-build issues  
+Many followup questions were asked within VSCode to Copilot with Gemini 2.5 Pro to resolve various post-build issues.  Also I changed the logging from a db file to a log file. 
