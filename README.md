@@ -115,7 +115,7 @@ The application logs all synchronization activity to the file specified by the `
 
 ## How This Project Was Built
 
-This project was built using [spec-kit](https://github.com/github/spec-kit). For more details on the development process, see [howthisprojectwasbuilt.md](howthisprojectwasbuilt.md).
+This project was built using [spec-kit](https://github.com/github/spec-kit), VSCode using a Copilot with a Gemini 2.5 Pro agent. For more details on the development process, see [howthisprojectwasbuilt.md](howthisprojectwasbuilt.md).
 
 ## Acknowledgements
 
