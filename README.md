@@ -1,4 +1,4 @@
-# Spotify to Tidal Music Library Sync
+# Spotify 2 Tidal Music Library Sync
 
 A command-line tool to synchronize your Spotify music library—including saved albums, artists, tracks, and playlists—to your Tidal account.
 
