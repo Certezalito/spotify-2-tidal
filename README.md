@@ -11,21 +11,26 @@ A command-line tool to synchronize your Spotify music library—including saved 
 
 ## Installation
 
+This project uses `uv` for fast environment and dependency management. You can install it with:
+```bash
+pip install uv
+```
+
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/Certezalito/spotify-2-tidal-spec-kit.git
-    cd spotify-2-tidal-spec-kit
+    git clone https://github.com/Certezalito/spotify-2-tidal.git
+    cd spotify-2-tidal
     ```
 
-2.  **Create and activate a virtual environment**:
+2.  **Create and activate a virtual environment with `uv`**:
     ```bash
-    python3 -m venv .venv
+    uv venv
     source .venv/bin/activate
     ```
 
-3.  **Install dependencies**:
+3.  **Install dependencies with `uv`**:
     ```bash
-    pip install -r requirements.txt
+    uv pip install -r requirements.txt
     ```
 
 ## Configuration
