@@ -12,6 +12,7 @@ This document outlines the implementation plan for a command-line tool that sync
 ## Technical Context
 
 **Language/Version**: Python 3.11+  
+**Environment Management**: uv  
 **Primary Dependencies**: spotipy, tidalapi, click, python-dotenv  
 **Storage**: Log file for storing timestamped sync status (e.g., `sync.log`)  
 **Testing**: Manual testing  
