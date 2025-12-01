@@ -25,7 +25,6 @@ pip install uv
 2.  **Create and activate a virtual environment with `uv`**:
     ```bash
     uv venv
-    source .venv/bin/activate
     ```
 
 3.  **Install dependencies with `uv`**:
@@ -33,10 +32,6 @@ pip install uv
     uv pip install -r requirements.txt
     ```
 
-4.  **Deactivate the virtual env**:
-    ```bash
-    deactivate
-    ```
 
 ## Configuration
 
