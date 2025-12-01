@@ -1,6 +1,5 @@
 /.venv
 .cache
-.env
+.env*
 tidal_session.json
-synced.db
 sync.log

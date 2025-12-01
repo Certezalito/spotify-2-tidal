@@ -33,6 +33,11 @@ pip install uv
     uv pip install -r requirements.txt
     ```
 
+4.  **Deactivate the virtual env**:
+    ```bash
+    deactivate
+    ```
+
 ## Configuration
 
 Before you can use the tool, you need to configure your API credentials and settings in a `.env` file.
@@ -50,7 +55,6 @@ Before you can use the tool, you need to configure your API credentials and sett
     # Tidal API Credentials
     TIDAL_CLIENT_ID=your_tidal_client_id
     TIDAL_CLIENT_SECRET=your_tidal_client_secret
-    TIDAL_REDIRECT_URI=http://127.0.0.1:8888/callback
 
     # Application Settings
     TIDAL_PLAYLIST_FOLDER=synced_from_spotify
@@ -83,7 +87,6 @@ Before you can use the tool, you need to configure your API credentials and sett
     1.  Go to the [Tidal Developer Portal](https://developer.tidal.com/).
     2.  Create a new application.
     3.  Copy the `Client ID` and `Client Secret` into your `.env` file.
-    4.  In your Tidal application settings, add `http://127.0.0.1:8888/callback` as a "Redirect URI".
 
 ## Usage
 
@@ -94,29 +97,36 @@ Make sure your virtual environment is activated before running any commands.
 To synchronize your entire Spotify music library to your Tidal account, run the following command:
 
 ```bash
-python3 -m src.cli.main sync
+uv run python3 -m src.cli.main sync
 ```
 
 ### Selective Synchronization
 
 You can also synchronize specific types of your music data:
 
--   **Albums**: `python3 -m src.cli.main sync --sync-albums`
--   **Artists**: `python3 -m src.cli.main sync --sync-artists`
--   **Tracks**: `python3 -m src.cli.main sync --sync-tracks`
--   **Playlists**: `python3 -m src.cli.main sync --sync-playlists`
+-   **Albums**: `uv run python3 -m src.cli.main sync --sync-albums`
+-   **Artists**: `uv run python3 -m src.cli.main sync --sync-artists`
+-   **Tracks**: `uv run python3 -m src.cli.main sync --sync-tracks`
+-   **Playlists**: `uv run python3 -m src.cli.main sync --sync-playlists`
 
 ### Help
 
 To view the help message, run:
 
 ```bash
-python3 -m src.cli.main sync --help
+uv run python3 -m src.cli.main sync --help
 ```
 
 ## Viewing the Log File
 
 The application logs all synchronization activity to the file specified by the `LOG_FILE` variable in your `.env` file (default is `sync.log`). You can review this file to see which items were synced successfully and which failed.
+
+## Switching Accounts / Troubleshooting
+
+The application caches your login sessions to make it easier to run multiple times. If you want to switch to a different Spotify or Tidal account, you will need to delete the cached session files.
+
+-   **To switch Spotify accounts**: Delete the `.cache` file in the root of the project directory.
+-   **To switch Tidal accounts**: Delete the file specified by `TIDAL_SESSION_FILE` in your `.env` file (the default is `tidal_session.json`).
 
 ## How This Project Was Built
 

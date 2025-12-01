@@ -2,4 +2,3 @@ spotipy
 tidalapi>=0.7.0
 click
 python-dotenv
-werkzeug
